@@ -1,0 +1,89 @@
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-8">
+  <h2 class="text-2xl mb-6 font-semibold text-blue-800 text-center">Alta de Turno</h2>
+  <form #myForm="ngForm" (ngSubmit)="guardarTurno(myForm)" class="space-y-5">
+    <div>
+      <label class="block mb-1 text-sm font-medium text-gray-700">Paciente</label>
+      <select
+        name="paciente"
+        [(ngModel)]="idPaciente"
+        required
+        #paciente="ngModel"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option value="0">Seleccionar paciente</option>
+        @for (p of pacientes; track p.id) {
+          <option value="{{p.id}}">{{ p.nombre_completo }}</option>
+        }
+      </select>
+      @if (paciente.getError("required") && (paciente.dirty || paciente.touched)) {
+        <div class="text-red-500 text-sm mt-2">
+          Debe seleccionar un paciente.
+        </div>
+      }
+    </div>
+    <div>
+      <label class="block mb-1 text-sm font-medium text-gray-700">Estudio</label>
+      <select
+        name="estudio"
+        [(ngModel)]="idEstudio"
+        required
+        #estudio="ngModel"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option value="0" selected>Seleccionar estudio</option>
+        @for (e of estudios; track e.id) {
+          <option value="{{e.id}}">{{ e.nombre_estudio }}</option>
+        }
+      </select>
+      @if (estudio.getError("required") && (estudio.dirty || estudio.touched)) {
+        <div class="text-red-500 text-sm mt-2">
+          Debe seleccionar un estudio.
+        </div>
+      }
+    </div>
+    <div>
+      <label class="block mb-1 text-sm font-medium text-gray-700">Extractor</label>
+      <select
+        name="extractor"
+        [(ngModel)]="idExtractor"
+        required
+        #extractor="ngModel"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option [ngValue]="0">Seleccionar extractor</option>
+        @for (e of extractores; track e.id) {
+          <option [ngValue]="e.id">{{ e.nombre_completo }}</option>
+        }
+      </select>
+      @if (extractor.getError("required") && (extractor.dirty || extractor.touched)) {
+        <div class="text-red-500 text-sm mt-2">
+          Debe seleccionar un extractor.
+        </div>
+      }
+    </div>
+    <div>
+      <label class="block mb-1 text-sm font-medium text-gray-700">Fecha y Hora</label>
+      <input
+        type="datetime-local"
+        name="fechaHora"
+        [(ngModel)]="turno.fechaHora"
+        required
+        #fechaHora="ngModel"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" type="datetime-local" />
+      <div class="text-xs text-gray-400 mt-1">Horario válido: 07:00 - 10:45</div>
+      @if (fechaHora.getError("required") && (fechaHora.dirty || fechaHora.touched)) {
+        <div class="text-red-500 text-sm mt-2">
+          Debe seleccionar una fecha.
+        </div>
+      }
+    </div>
+    <div>
+      <label class="block mb-1 text-sm font-medium text-gray-700">Observaciones</label>
+      <input
+        name="observaciones"
+        [(ngModel)]="turno.observaciones"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" type="text" />
+    </div>
+    <button
+      type="submit"
+      [disabled]="deshabilitarBoton()"
+      class="w-full bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors font-semibold" type="submit">Guardar Turno</button>
+  </form>
+</div>

@@ -1,0 +1,91 @@
+<form  #formFiltro (ngSubmit)="filtrarTurnos()" class="flex flex-wrap gap-6 items-end mb-6 bg-white shadow rounded-xl p-6">
+  <div class="w-full mb-4 flex flex-wrap gap-4 items-center">
+    <label class="font-semibold text-gray-700">Filtrar por:</label>
+    <label class="flex items-center gap-1">
+      <input
+        type="radio"
+        name="tipoFiltro"
+        value="paciente"
+        [(ngModel)]="tipoFiltro"
+        (change)="onTipoFiltroChange()">
+      Paciente
+    </label>
+    <label class="flex items-center gap-1">
+      <input
+        type="radio"
+        name="tipoFiltro"
+        value="estudio"
+        [(ngModel)]="tipoFiltro"
+        (change)="onTipoFiltroChange()">
+      Estudio
+    </label>
+    <label class="flex items-center gap-1">
+      <input
+        type="radio"
+        name="tipoFiltro"
+        value="extractor"
+        [(ngModel)]="tipoFiltro"
+        (change)="onTipoFiltroChange()">
+      Extractor
+    </label>
+    <label class="flex items-center gap-1">
+      <input
+        type="radio"
+        name="tipoFiltro"
+        value="fecha"
+        [(ngModel)]="tipoFiltro"
+        (change)="onTipoFiltroChange()">
+      Fecha
+    </label>
+  </div>
+  <div class="flex-1 min-w-[180px]" *ngIf="tipoFiltro === 'paciente'">
+    <label class="block mb-1 text-sm font-medium text-gray-700">Paciente</label>
+    <select
+      [(ngModel)]="filtro.paciente_id"
+      name="filter_paciente_id"
+      (change)="limpiarFiltros('paciente_id')"
+      class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="">[Todos]</option>
+      @for (p of pacientes; track p.id) {
+      <option [value]="p.id">{{ p.nombre_completo }}</option>
+      }
+    </select>
+  </div>
+  <div class="flex-1 min-w-[180px]" *ngIf="tipoFiltro === 'estudio'">
+    <label class="block mb-1 text-sm font-medium text-gray-700">Estudio</label>
+    <select
+      [(ngModel)]="filtro.estudio_id"
+      name="filter_estudio_id"
+      (change)="limpiarFiltros('estudio_id')"
+      class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="">[Todos]</option>
+      @for (e of estudios; track e.id) {
+      <option [value]="e.id">{{ e.nombre_estudio }}</option>
+      }
+    </select>
+  </div>
+  <div class="flex-1 min-w-[180px]" *ngIf="tipoFiltro === 'extractor'">
+    <label class="block mb-1 text-sm font-medium text-gray-700">Extractor</label>
+    <select
+      [(ngModel)]="filtro.extractor_id"
+      name="filter_extractor_id"
+      (change)="limpiarFiltros('extractor_id')"
+      class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <option value="">[Todos]</option>
+      @for (x of extractores; track x.id) {
+      <option [value]="x.id">{{ x.nombre_completo }}</option>
+      }
+    </select>
+  </div>
+  <div class="flex-1 min-w-[180px]" *ngIf="tipoFiltro === 'fecha'">
+    <label class="block mb-1 text-sm font-medium text-gray-700">Fecha</label>
+    <input
+      type="date"
+      [(ngModel)]="filtro.fecha"
+      (input)="limpiarFiltros('fecha')"
+      name="filter_fecha"
+           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+  </div>
+  <button class="bg-blue-700 text-white px-5 py-2 rounded-lg hover:bg-blue-800 transition-colors font-semibold mt-4"
+    type="submit">Filtrar</button>
+</form>
